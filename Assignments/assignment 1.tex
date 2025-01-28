@@ -1,0 +1,154 @@
+
+\documentclass[12pt]{article}
+
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amsthm,thmtools}
+\usepackage{tikz}
+\usepackage{enumerate}
+\usepackage{xfrac}
+\usepackage{breqn}
+\usepackage{amssymb}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{parskip}
+\def\bold{\textbf}
+\theoremstyle{plain}
+\newenvironment{problem}[2][Problem]{\begin{trivlist}
+		\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+
+\newenvironment{solution}[2][Solution]{\begin{trivlist}
+		\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\theoremstyle{remark}
+\newtheorem*{idea}{Idea}
+\theoremstyle{plain}
+\newtheorem{thm}{Theorem}
+\newtheorem{theorem}{Theorem}
+\newtheorem{proposition}[thm]{Proposition}
+\newtheorem{lemma}{Lemma}
+\newtheorem{cor}[thm]{Corollary}
+\theoremstyle{definition}
+\newtheorem{definition}[thm]{Definition}
+\newtheorem*{ex}{Example}
+\theoremstyle{remark}
+\newtheorem*{note}{Remark}
+\newtheorem*{remark}{Remark}
+
+
+
+
+\newcommand {\ds}{\displaystyle\sum}
+\newcommand {\nnR} {\mathbb{R}_{\geq 0}}
+
+\newcommand {\Mtt}[4] {\begin{bmatrix}#1 & #2\\ #3 & #4\end{bmatrix}}
+\newcommand {\Ctt}[2] {\Mtt {#1}{-#2}{#2}{#1}}
+\newcommand {\R} {\mathbb R}
+\newcommand {\C} {\mathcal C}
+\newcommand {\Z} {\mathbb Z}
+\newcommand {\N} {\mathbb N}
+\newcommand {\Q} {\mathbb Q}
+\newcommand {\La} {\mathcal L}
+\newcommand {\Sc} {\mathcal S}
+\newcommand {\RmQ} {\mathbb R \setminus \mathbb Q}
+\newcommand {\cI} {\mathcal I}
+\newcommand {\x} {\xi}
+\newcommand {\e} {\eta}
+\newcommand {\p} [1]{\partial_#1}
+\newcommand {\ps} [1]{\partial^2_#1}
+\newcommand {\lb} {\left(}
+\newcommand {\rb} {\right)}
+
+\newcommand {\lap}[2] {\mathcal L\{#1\}\lb #2\rb}
+\newcommand {\Tr}[2] {T\{#1\}\lb #2\rb}
+
+\algdef{SE}[PROCEDURE]{Procedure}{EndProcedure}%
+[2]{\algorithmicprocedure\ \textproc{#1}\ifthenelse{\equal{#2}{}}{}{(#2)}}%
+{\algorithmicend\ \algorithmicprocedure}%
+\algdef{SE}[FUNCTION]{Function}{EndFunction}%
+[2]{\algorithmicfunction\ \textproc{#1}\ifthenelse{\equal{#2}{}}{}{(#2)}}%
+{\algorithmicend\ \algorithmicfunction}%
+
+
+\begin{document}
+	
+	\title{Algos - Reading}
+	\author{Assignment 1}
+	\date{}
+	\maketitle
+	
+	\begin{problem} {1-1}
+		a) The oder is $(f_5, f_3, f_4, f_1, f_2)$.
+		
+		$f_2$ grows faster than $f_1$: suppose $n>4$, then $\log(n)>2$ so that $\log(n)^n > 2^n$, which grows faster than $n\log(n)$.
+		
+		
+		b) The order is $(f_1, f_2, f_5, f_4, f_3)$.
+		
+		Note that $f_4$ grows faster than $f_5$ since it has an exponential growth in the exponent, whereas $f_5$ has polynomial growth.
+		
+		$f_3$ grows faster than $f_4$ since we can rewrite $f_4 = 6006^{(2^n)} = \left(2^{\log_2 \left(6006\right)}\right)^{2^n} = 2^{\log_2\left(6006\right)2^n}$, and $6006^n$ grows faster than $2^n$.
+		
+		c) The order is $(\{f_2,f_5\},f_4,f_1,f_3)$.
+		
+		To find the growth of $f_4 = {n\choose \frac n 6}$ note that ${n \choose k }= \frac{n!}{k! (n-k)!}$ and suppose that  $k < n-k$. From this we have two bounds:
+		
+		1. ${n \choose k} \geq \frac 1 2 \frac{n!}{(n-k)!} \geq \frac 1 2 (n-k)^k$ 
+		
+		and 
+		
+		2. ${n \choose k} \leq \frac 1 2 \frac {n!}{k!}\leq \frac 1 2 n^{n-k}$
+		
+		When $k=\frac n 6$ we see from the latter inequality that $f_4$ grows slower than $n^n$.
+		
+	 
+		
+		$(6n)! \sim \sqrt{12 \pi n}\left(\frac{6n}{e}\right)^{6n}$ so that $f_3$ grows faster than $f_1$.
+		
+		d) The order is $(f_5,f_2,f_1,f_3, f_4)$.
+		
+		Simplifying $f_3 = \left(2^2\right)^{3n\log(n)}=n^{6n}$
+		
+		Note that if $\log\left(\frac{f(x)}{g(x)}\right)\rightarrow\infty$ as $x\rightarrow \infty$ then $\frac{f(x)}{g(x)}\rightarrow \infty$ as well, and since $n^2\log\left(7\right) - 6n \log\left(n\right)\rightarrow \infty$ as $n\rightarrow \infty$ we have that $f_4$ grows faster than $f_3$.
+	\end{problem}
+
+	
+	\begin{problem} {1-2}
+		
+			(a)
+			
+			D.exchange\_at(i,j):
+			
+			\quad set j to be the larger value
+			
+			\quad right\_at = D.delete\_at(j)
+			
+			\quad left\_at = D.delete\_at(i)
+			
+			\quad D.insert\_at(i, right\_at)
+			
+			\quad D.insert\_at(j, left\_at)
+			
+			reverse(D,i,k):
+			
+			\quad set n = floor(k/2)
+			
+			\quad for j in 1 to n:
+			
+			\quad D.exchange\_at(i, i+k - j)
+			
+			b)
+			
+			move(D,i,k,j):
+			
+			\quad for n in 0..k-1:
+			
+			\quad \quad item = D.delete\_at(i+n)
+			
+		\quad	\quad D.insert\_at(j+n-1, item)
+	\end{problem}
+	\begin{problem}{1-4}		(a)
+	\end{problem}
+	
+	
+	
+\end{document}
